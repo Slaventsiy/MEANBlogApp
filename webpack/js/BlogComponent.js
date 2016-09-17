@@ -36,8 +36,7 @@ class BlogComponent {
     }
 
     createBlog() {
-        this.blogData._creator = this.user._id || 'anonymous';
-        console.log(this.blogData._creator);
+        this.blogData._creator = this.user._id;
         this.blogService.postNewBlog(this.blogData)
             .subscribe(res => {
                 console.log(res);
