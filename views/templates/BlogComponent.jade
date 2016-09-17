@@ -1,0 +1,54 @@
+doctype html
+nav.navbar.navbar-inverse
+    .container-fluid
+        .navbar-header
+            a.navbar-brand Dimebox Blog App
+        ul.nav.navbar-nav.navbar-right
+            li
+                a
+                    span.glyphicon.glyphicon-user
+                    input(type='text' style='color:#808080;' placeholder='Username' ref-username value='{{user.name}}')
+            li
+                a(on-click='login(username.value)')
+                    span.glyphicon.glyphicon-log-in Login
+.container-fluid
+    .row.content
+        .col-sm-3.sidenav
+            h4 Topics
+                span.badge.pull-right {{blogs.length}}
+            ul.nav.nav-pills.nav-stacked(*ngFor="let topic of topics")
+                li
+                    a {{topic._id}}
+                        span.badge.pull-right {{topic.count}}
+            .input-group
+                input.form-control(type="text" placeholder="Search Blog..")
+                span.input-group-btn
+                    button.btn.btn-default
+                        span.glyphicon.glyphicon-search
+        .col-sm-9
+            h2.text-center Blog posts (yours and public)
+            h4.text-center(*ngIf="user._id") Your made {{postCount}} posts
+            hr
+            .blogs(*ngFor="let post of blogs")
+                .blogpost(*ngIf="post.public || post._creator._id === user._id")
+                    button.btn.btn-link.btn-sm.pull-right(type='button' aria-label='Remove' on-click='deleteBlog(post._id)')
+                        span.glyphicon.glyphicon-remove.text-danger(aria-hidden='true')
+                    h2 {{post.title}}
+                    h5
+                        em by {{post._creator.name}}
+                    h5
+                        span.label.label-primary {{post.topic}}
+                    textarea.form-control(rows="5" ref-postText) {{post.text}}
+                    button.btn.btn-success(type='button' on-click='updateBlog(post._id, postText.value)') Save
+                    br
+                    br
+            hr
+            h4 Make a post
+            form(role="form" on-ngSubmit='createBlog()')
+                .form-group
+                    input.form-control.input-sm(type='text' placeholder='Title' bindon-ngModel='blogData.title' required)
+                    textarea.form-control(rows="3" placeholder='What do you want to say?' bindon-ngModel='blogData.text' required)
+                    input(type='checkbox' bindon-ngModel='blogData.public')
+                    | Public?
+                    input.form-control.input-sm(type='text' placeholder='Topic' bindon-ngModel='blogData.topic' required)
+                button.btn.btn-success(type='submit') Submit
