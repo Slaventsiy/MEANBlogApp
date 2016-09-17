@@ -27,7 +27,7 @@ nav.navbar.navbar-inverse
                         span.glyphicon.glyphicon-search
         .col-sm-9
             h2.text-center Blog posts (yours and public)
-            h4.text-center(*ngIf="user._id") Your made {{postCount}} posts
+            h4.text-center(*ngIf="user._id") You made {{postCount}} posts
             hr
             .blogs(*ngFor="let post of blogs")
                 .blogpost(*ngIf="post.public || post._creator._id === user._id")
