@@ -44,7 +44,8 @@ nav.navbar.navbar-inverse
                     br
             hr
             h4 Make a post
-            form(role="form" on-ngSubmit='createBlog()')
+                h6.text-warning (only logged in users)
+            form(*ngIf="user._id.length > 1" role="form" on-ngSubmit='createBlog()')
                 .form-group
                     input.form-control.input-sm(type='text' placeholder='Title' bindon-ngModel='blogData.title' required)
                     textarea.form-control(rows="3" placeholder='What do you want to say?' bindon-ngModel='blogData.text' required)
